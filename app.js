@@ -73,7 +73,7 @@ function flipCard(){
     const cardId =  this.getAttribute('data-id')
     cardsChosen.push(cardArray[cardId].name)
     console.log('clicked', cardId)
-    console.log(cardsChosen) 
+    console.log(cardsChosen)   
 }
 
 console.log(grid)
