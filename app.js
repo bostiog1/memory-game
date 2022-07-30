@@ -52,6 +52,7 @@ const cardArray = [
 cardArray.sort(() => 0.5 - Math.random()) // compara 2 valori si le sorteaza
 
 const gridDisplay = document.querySelector('#grid')
+const resultDisplay = document.querySelector('#result')
 let cardsChosen = []
 let cardsChosenIds = []
 const cardsWon = []
@@ -76,6 +77,8 @@ function checkMatch() {
     console.log(cards)
     console.log('check for match!')
     if(optioneOneId == optioneTwoId) {
+        cards[optioneOneId].setAttribute('src', 'images/blank.png') 
+        cards[optioneTwoId].setAttribute('src', 'images/blank.png')
         alert('You have clicked the same image!')
     }
  
@@ -89,10 +92,15 @@ function checkMatch() {
     } else {
         cards[optioneOneId].setAttribute('src', 'images/blank.png') 
         cards[optioneTwoId].setAttribute('src', 'images/blank.png') 
-
+        alert('Sorry, try again!')
     }
+    resultDisplay.textContent = cardsWon.length
     cardsChosen = [] 
     cardsChosenIds = [] 
+
+    if(cardsWon.length === cardArray.length/2) {
+        resultDisplay.innerHTML= 'Congratulations! You found them all!'
+    }
 
 }
 
