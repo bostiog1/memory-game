@@ -52,7 +52,9 @@ const cardArray = [
 cardArray.sort(() => 0.5 - Math.random()) // compara 2 valori si le sorteaza
 
 const gridDisplay = document.querySelector('#grid')
-const cardsChosen = []
+let cardsChosen = []
+let cardsChosenIds = []
+const cardsWon = []
 
 
 function createBoard() {
@@ -67,13 +69,42 @@ function createBoard() {
 
 createBoard()
 
-function flipCard(){
+function checkMatch() {
+    const cards = document.querySelectorAll('img')
+    const optioneOneId = cardsChosenIds[0]
+    const optioneTwoId = cardsChosenIds[1]
+    console.log(cards)
+    console.log('check for match!')
+    if(optioneOneId == optioneTwoId) {
+        alert('You have clicked the same image!')
+    }
+ 
+    if(cardsChosen[0] == cardsChosen[1]) {
+        alert('You found a match!')
+        cards[optioneOneId].setAttribute('src', 'images/white.png') 
+        cards[optioneTwoId].setAttribute('src', 'images/white.png') 
+        cards[optioneOneId].removeEventListener('click', flipCard)
+        cards[optioneTwoId].removeEventListener('click', flipCard)
+        cardsWon.push(cardsChosen)
+    } else {
+        cards[optioneOneId].setAttribute('src', 'images/blank.png') 
+        cards[optioneTwoId].setAttribute('src', 'images/blank.png') 
 
-    console.log(cardArray)
+    }
+    cardsChosen = [] 
+    cardsChosenIds = [] 
+
+}
+
+function flipCard(){ 
     const cardId =  this.getAttribute('data-id')
-    cardsChosen.push(cardArray[cardId].name)
-    console.log('clicked', cardId)
-    console.log(cardsChosen)   
+    cardsChosen.push(cardArray[cardId].name)       
+    cardsChosenIds.push(cardId)
+    this.setAttribute('src', cardArray[cardId].img)
+    if(cardsChosen.length === 2) {
+        setTimeout( checkMatch, 500)
+    }
+
 }
 
 console.log(grid)
